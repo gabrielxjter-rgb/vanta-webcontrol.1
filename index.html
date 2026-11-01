@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VANTA FF V2</title>
+<style>
+*{box-sizing:border-box}
+body{
+ background:#080810;color:white;
+ font-family:Arial;margin:0;padding:20px
+}
+main{max-width:450px;margin:auto}
+header{text-align:center;padding:25px}
+.logo{font-size:35px;font-weight:900;
+ letter-spacing:7px;color:#a855f7}
+.sub{color:#777;font-size:11px}
+.card{
+ background:#151522;border:1px solid #342044;
+ border-radius:15px;padding:17px;margin-bottom:15px
+}
+h3{font-size:14px;color:#c084fc}
+button{
+ border:0;border-radius:9px;padding:13px;
+ background:#282438;color:white;font-weight:bold;
+ width:100%;margin-top:9px
+}
+.active{background:#8b35d5}
+canvas{
+ width:100%;background:#090914;
+ border:1px solid #51316c;border-radius:10px
+}
+.status{color:#aaa;font-size:12px}
+input[type=checkbox]{accent-color:#a855f7}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="logo">VANTA</div>
+<div class="sub">FREE FIRE WEB CONTROL • V2.0</div>
+</header>
+
+<section class="card">
+<h3>ESP VISUAL DEMO</h3>
+<p class="status">Ambiente de simulação com jogadores fictícios.</p>
+<canvas id="screen" width="360" height="230"></canvas>
+<label><input type="checkbox" id="boxes" checked> ESP BOX</label><br>
+<label><input type="checkbox" id="names" checked> NAMES</label><br>
+<label><input type="checkbox" id="distance" checked> DISTANCE</label>
+<button class="active" onclick="draw()">ATUALIZAR DEMO</button>
+</section>
+
+<section class="card">
+<h3>ANTI-CHEAT DIAGNOSTICS</h3>
+<p class="status" id="diagnostic">Aguardando diagnóstico...</p>
+<button onclick="diagnose()">EXECUTAR DIAGNÓSTICO</button>
+</section>
+
+<section class="card">
+<h3>WEB CONTROL</h3>
+<p class="status" id="connection">DISCONNECTED</p>
+<button class="active" onclick="connect()">CONNECT</button>
+<button onclick="disconnect()">DISCONNECT</button>
+</section>
+
+<footer class="sub" style="text-align:center;padding:15px">
+VANTA TEAM • VERSION 2.0
+</footer>
+</main>
+
+<script>
+const canvas=document.getElementById("screen");
+const ctx=canvas.getContext("2d");
+
+const players=[
+{x:65,y:65,n:"PLAYER 01",d:"12m"},
+{x:175,y:95,n:"PLAYER 02",d:"24m"},
+{x:270,y:55,n:"PLAYER 03",d:"36m"}
+];
+
+function draw(){
+ctx.clearRect(0,0,360,230);
+ctx.fillStyle="#090914";
+ctx.fillRect(0,0,360,230);
+
+players.forEach(p=>{
+if(document.getElementById("boxes").checked){
+ctx.strokeStyle="#b45cff";
+ctx.lineWidth=2;
+ctx.strokeRect(p.x,p.y,35,75);
+}
+if(document.getElementById("names").checked){
+ctx.fillStyle="#ffffff";
+ctx.font="10px Arial";
+ctx.fillText(p.n,p.x-8,p.y-8);
+}
+if(document.getElementById("distance").checked){
+ctx.fillStyle="#c084fc";
+ctx.fillText(p.d,p.x,p.y+88);
+}
+});
+}
+
+function diagnose(){
+document.getElementById("diagnostic").textContent=
+"Diagnóstico concluído: navegador ativo. Integração com Free Fire e bypass não disponíveis.";
+}
+
+function connect(){
+document.getElementById("connection").textContent=
+"WEB PANEL ACTIVE — PROXY NOT CONNECTED";
+}
+
+function disconnect(){
+document.getElementById("connection").textContent=
+"DISCONNECTED";
+}
+
+document.querySelectorAll("input").forEach(el=>{
+el.addEventListener("change",draw);
+});
+draw();
+</script>
+</body>
+</html>
